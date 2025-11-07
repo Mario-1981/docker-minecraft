@@ -1,0 +1,21 @@
+#version: "3.9"
+
+services:
+  paper:
+    image: ghcr.io/Mario-1981/minecraft-paper:latest  # Image aus GHCR
+    environment:
+      PAPER_VERSION: "1.21.8"
+      EULA: "TRUE"
+    ports:
+      - "25565:25565"
+    volumes:
+      - paper_data:/minecraft
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    tty: true
+    stdin_open: true
+
+volumes:
+  paper_data:

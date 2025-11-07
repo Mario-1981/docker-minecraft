@@ -1,0 +1,19 @@
+#version: "3.9"
+
+services:
+  paper:
+    build: ./paper               # Pfad zu deinem Dockerfile
+#    image: ghcr.io/Mario-1981/minecraft-paper:latest
+    container_name: paper
+    environment:
+      PAPER_VERSION: "1.21.8"   # PaperMC Version
+      EULA: "TRUE"
+    ports:
+      - "25565:25565"
+    volumes:
+      - paper_data:/minecraft    # Persistente Daten
+    stdin_open: true             # Erlaubt interaktive Konsole
+    tty: true                    # Terminal für docker exec -it
+
+volumes:
+  paper_data:
