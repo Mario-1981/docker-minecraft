@@ -1,28 +1,22 @@
 #!/bin/bash
 set -e
 
-cd /minecraft
+# Init: Prüfen ob gemountetes Verzeichnis existiert und JAR fehlt
+if [ ! -f /minecraft/paper.jar ]; then
+    echo "Kopiere Standarddateien ins gemountete Verzeichnis..."
+    cp /minecraft-default/* /minecraft/
+fi
 
-if [ "${EULA}" != "TRUE" ]; then
-    echo "--------------------------------------------------"
-    echo "  You must accept the Minecraft EULA to proceed."
-    echo "  Set environment variable EULA=TRUE to continue."
-    echo "  (https://aka.ms/MinecraftEULA)"
-    echo "--------------------------------------------------"
+# EULA prüfen
+if [ "$EULA" != "TRUE" ]; then
+    echo "EULA nicht akzeptiert. Setze EULA=TRUE."
     exit 1
 fi
 
-echo "eula=true" > eula.txt
-# === Standardwerte für Java-Optionen setzen ===
-JAVA_XMS=${JAVA_XMS:-1G}  # Standard 1G, falls nicht gesetzt
-JAVA_XMX=${JAVA_XMX:-2G}  # Standard 2G, falls nicht gesetzt
-JAVA_OPTS=${JAVA_OPTS:-"-XX:+UseG1GC"} # zusätzliche Optionen (optional)
-
-echo "Starting PaperMC server with:"
+# Server starten
+echo "Starting PaperMC server..."
 echo "  Xms = $JAVA_XMS"
 echo "  Xmx = $JAVA_XMX"
 echo "  Options = $JAVA_OPTS"
-echo ""
 
-# === Server starten ===
-exec java -Xms${JAVA_XMS} -Xmx${JAVA_XMX} ${JAVA_OPTS} -jar paper.jar nogui
+exec java -Xms${JAVA_XMS} -Xmx${JAVA_XMX} $JAVA_OPTS -jar /minecraft/paper.jar nogui
