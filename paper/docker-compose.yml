@@ -2,7 +2,7 @@
 
 services:
   paper:
-    image: ghcr.io/Mario-1981/minecraft-paper:1.21.8
+    image: ghcr.io/mario-1981/minecraft-paper:latest
     container_name: paper
     environment:
       EULA: "TRUE"        # muss explizit gesetzt werden!

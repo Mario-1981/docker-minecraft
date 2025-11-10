@@ -1,0 +1,22 @@
+#version: "3.9"
+
+services:
+  paper:
+    image: ghcr.io/mario-1981/minecraft-folia:latest
+    environment:
+      EULA: "TRUE"
+      JAVA_XMS: "2G"
+      JAVA_XMX: "4G"
+    ports:
+      - "25565:25565"
+    volumes:
+      - folia_data:/minecraft
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    tty: true
+    stdin_open: true
+
+volumes:
+  folia_data:

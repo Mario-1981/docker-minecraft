@@ -2,7 +2,7 @@
 
 services:
   paper:
-    image: ghcr.io/<USERNAME>/minecraft-paper:1.21.8
+    image: ghcr.io/mario-1981/minecraft-paper:latest
     environment:
       EULA: "TRUE"
       JAVA_XMS: "2G"
