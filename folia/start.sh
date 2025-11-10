@@ -1,28 +1,22 @@
 #!/bin/bash
 set -e
 
-cd /minecraft
-
-if [ "${EULA}" != "TRUE" ]; then
-    echo "--------------------------------------------------"
-    echo "  You must accept the Minecraft EULA to proceed."
-    echo "  Set environment variable EULA=TRUE to continue."
-    echo "  (https://aka.ms/MinecraftEULA)"
-    echo "--------------------------------------------------"
-    exit 1
+# Init: Prüfen ob gemountetes Verzeichnis existiert und JAR fehlt
+if [ ! -f /minecraft/folia.jar ]; then
+    echo "Kopiere Standarddateien ins gemountete Verzeichnis..."
+    cp /minecraft-default/* /minecraft/
 fi
 
-echo "eula=true" > eula.txt
-# === Standardwerte für Java-Optionen setzen ===
-JAVA_XMS=${JAVA_XMS:-1G}  # Standard 1G, falls nicht gesetzt
-JAVA_XMX=${JAVA_XMX:-2G}  # Standard 2G, falls nicht gesetzt
-JAVA_OPTS=${JAVA_OPTS:-"-XX:+UseG1GC"} # zusätzliche Optionen (optional)
+# EULA automatisch schreiben
+echo "eula=${EULA}" > /minecraft/eula.txt
+if [ "$EULA" != "TRUE" ]; then
+    echo "EULA nicht akzeptiert. Setze EULA=TRUE im ENV."
+fi
 
-echo "Starting PaperMC server with:"
+# Server starten
+echo "Starting Folia server..."
 echo "  Xms = $JAVA_XMS"
 echo "  Xmx = $JAVA_XMX"
 echo "  Options = $JAVA_OPTS"
-echo ""
 
-# === Server starten ===
-exec java -Xms${JAVA_XMS} -Xmx${JAVA_XMX} ${JAVA_OPTS} -jar folia.jar nogui
+exec java -Xms${JAVA_XMS} -Xmx${JAVA_XMX} $JAVA_OPTS -jar /minecraft/folia.jar nogui

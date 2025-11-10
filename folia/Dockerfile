@@ -1,31 +1,34 @@
 # Folia Dockerfile
 FROM debian:13-slim
 
-# Standard ARG für Folia Version
+# Build-Argument für Folia-Version
 ARG FOLIA_VERSION=1.21.8
 
-# Install Java und Hilfsprogramme
+# Installiere Java & Hilfsprogramme
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openjdk-21-jdk-headless curl jq ca-certificates && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Arbeitsverzeichnis
+# Arbeitsverzeichnis im Container
 WORKDIR /minecraft
+
+# Standard-Dateien Verzeichnis im Image
+RUN mkdir -p /minecraft-default
 
 # Folia JAR herunterladen (neueste Build)
 RUN echo "Downloading Folia version ${FOLIA_VERSION}..." && \
     BUILD=$(curl -fsSL https://api.papermc.io/v2/projects/folia/versions/${FOLIA_VERSION} | jq -r '.builds[-1]') && \
-    curl -fsSL -o folia.jar https://api.papermc.io/v2/projects/folia/versions/${FOLIA_VERSION}/builds/${BUILD}/downloads/folia-${FOLIA_VERSION}-${BUILD}.jar
+    curl -fsSL -o /minecraft-default/folia.jar https://api.papermc.io/v2/projects/folia/versions/${FOLIA_VERSION}/builds/${BUILD}/downloads/folia-${FOLIA_VERSION}-${BUILD}.jar
 
-# Startscript kopieren
-COPY start.sh /minecraft/start.sh
-RUN chmod +x /minecraft/start.sh
+# Startscript ins Default-Verzeichnis kopieren
+COPY start.sh /minecraft-default/start.sh
+RUN chmod +x /minecraft-default/start.sh
 
-# EULA als ENV
+# ENV für EULA & Java
 ENV EULA=FALSE
-# Java-Options
 ENV JAVA_XMS=1G
 ENV JAVA_XMX=2G
+ENV JAVA_OPTS=""
 
-# Default CMD
-CMD ["/minecraft/start.sh"]
+# Standard CMD
+CMD ["/minecraft-default/start.sh"]

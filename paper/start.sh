@@ -7,10 +7,10 @@ if [ ! -f /minecraft/paper.jar ]; then
     cp /minecraft-default/* /minecraft/
 fi
 
-# EULA prüfen
+# EULA automatisch schreiben
+echo "eula=${EULA}" > /minecraft/eula.txt
 if [ "$EULA" != "TRUE" ]; then
-    echo "EULA nicht akzeptiert. Setze EULA=TRUE."
-    exit 1
+    echo "EULA nicht akzeptiert. Setze EULA=TRUE im ENV."
 fi
 
 # Server starten
