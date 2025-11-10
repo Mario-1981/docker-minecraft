@@ -16,7 +16,7 @@ services:
     ports:
       - "25565:25565"
     volumes:
-      - velocity_data:/minecraft
+      - ./velocity_data:/minecraft
     stdin_open: true
     tty: true
 
@@ -33,13 +33,9 @@ services:
       JAVA_XMX: "4G"
       JAVA_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled"
     volumes:
-      - paper_data:/minecraft
+      - ./paper_data:/minecraft
     stdin_open: true
     tty: true
-
-volumes:
-  paper_data:
-  velocity_data:
 
 networks:
   minecraft:

@@ -14,9 +14,6 @@ services:
     ports:
       - "25565:25565"
     volumes:
-      - folia_data:/minecraft
+      - ./folia_data:/minecraft
     stdin_open: true
     tty: true
-
-volumes:
-  folia_data:

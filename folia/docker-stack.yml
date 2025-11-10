@@ -10,13 +10,10 @@ services:
     ports:
       - "25565:25565"
     volumes:
-      - folia_data:/minecraft
+      - /opt/folia_data:/minecraft
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
     tty: true
     stdin_open: true
-
-volumes:
-  folia_data:

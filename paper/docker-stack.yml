@@ -10,13 +10,10 @@ services:
     ports:
       - "25565:25565"
     volumes:
-      - paper_data:/minecraft
+      - /opt/paper_data:/minecraft
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
     tty: true
     stdin_open: true
-
-volumes:
-  paper_data:
