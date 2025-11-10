@@ -16,7 +16,7 @@ services:
     ports:
       - "25565:25565"
     volumes:
-      - ./velocity_data:/minecraft
+      - ./velocity_data:/velocity
     stdin_open: true
     tty: true
 
