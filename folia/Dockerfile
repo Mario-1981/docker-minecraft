@@ -3,6 +3,7 @@ FROM debian:13-slim
 
 # Build-Argument für Folia-Version
 ARG FOLIA_VERSION=1.21.8
+ENV IMAGE_TAG=${FOLIA_VERSION}
 
 # Installiere Java & Hilfsprogramme
 RUN apt-get update && \
@@ -18,7 +19,7 @@ RUN mkdir -p /minecraft-default
 # Folia JAR herunterladen (neueste Build)
 RUN echo "Downloading Folia version ${FOLIA_VERSION}..." && \
     BUILD=$(curl -fsSL https://api.papermc.io/v2/projects/folia/versions/${FOLIA_VERSION} | jq -r '.builds[-1]') && \
-    curl -fsSL -o /minecraft-default/folia.jar https://api.papermc.io/v2/projects/folia/versions/${FOLIA_VERSION}/builds/${BUILD}/downloads/folia-${FOLIA_VERSION}-${BUILD}.jar
+    curl -fsSL -o /minecraft-default/folia-${FOLIA_VERSION}.jar https://api.papermc.io/v2/projects/folia/versions/${FOLIA_VERSION}/builds/${BUILD}/downloads/folia-${FOLIA_VERSION}-${BUILD}.jar
 
 # Startscript ins Default-Verzeichnis kopieren
 COPY start.sh /minecraft-default/start.sh
