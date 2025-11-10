@@ -4,7 +4,7 @@ FROM debian:13
 ARG PAPER_VERSION=1.21.8
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends openjdk-17-jdk-headless curl jq ca-certificates && \
+    apt-get install -y --no-install-recommends openjdk-21-jdk-headless curl jq ca-certificates && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /minecraft
