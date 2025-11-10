@@ -25,8 +25,8 @@ docker-minecraft/
 ├── velocity/
 │   ├── Dockerfile
 │   └── start.sh
-├── docker-compose.yml          # für lokale Tests
-└── docker-stack.yml             # für Docker Swarm Deployments
+├── docker-compose.yml.example          
+└── docker-stack.yml.example             # für Docker Swarm Deployments
 ```
 
 ---
@@ -37,7 +37,7 @@ docker-minecraft/
 ✅ Java-Konfiguration über `JAVA_XMS`, `JAVA_XMX`, `JAVA_OPTS`  
 ✅ Kompatibel mit Host-Mounts / GlusterFS  
 ✅ Automatischer Download der passenden JAR-Dateien beim Build  
-✅ Healthchecks & Restart-Policies  
+✅ Restart-Policies  
 ✅ Swarm-fähiges Overlay-Netzwerk  
 
 ---
