@@ -2,18 +2,19 @@
 
 services:
   paper:
-    build: ./paper               # Pfad zu deinem Dockerfile
-#    image: ghcr.io/Mario-1981/minecraft-paper:latest
+    image: ghcr.io/Mario-1981/minecraft-paper:1.21.8
     container_name: paper
     environment:
-      PAPER_VERSION: "1.21.8"   # PaperMC Version
-      EULA: "TRUE"
+      EULA: "TRUE"        # muss explizit gesetzt werden!
+      JAVA_XMS: "2G"
+      JAVA_XMX: "4G"
+      JAVA_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled"
     ports:
       - "25565:25565"
     volumes:
-      - paper_data:/minecraft    # Persistente Daten
-    stdin_open: true             # Erlaubt interaktive Konsole
-    tty: true                    # Terminal für docker exec -it
+      - paper_data:/minecraft
+    stdin_open: true
+    tty: true
 
 volumes:
   paper_data:

@@ -1,25 +1,23 @@
-# Basis-Image
 FROM debian:13
 
-# Installiere OpenJDK und curl/wget
-RUN apt-get update && apt-get install -y openjdk-17-jdk-headless curl && \
+# PaperMC Version beim Build festlegen
+ARG PAPER_VERSION=1.21.8
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends openjdk-17-jdk-headless curl jq ca-certificates && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Arbeitsverzeichnis
 WORKDIR /minecraft
 
-# Environment-Variable für Paper-Version
-ENV PAPER_VERSION=latest
+# Paper JAR beim Build herunterladen
+RUN echo "Downloading PaperMC version ${PAPER_VERSION}..." && \
+    BUILD=$(curl -fsSL https://api.papermc.io/v2/projects/paper/versions/${PAPER_VERSION} | jq -r '.builds[-1]') && \
+    curl -fsSL -o paper.jar https://api.papermc.io/v2/projects/paper/versions/${PAPER_VERSION}/builds/${BUILD}/downloads/paper-${PAPER_VERSION}-${BUILD}.jar
 
-# EULA akzeptieren
-ENV EULA=TRUE
-
-# Kopiere Startscript
+# Startscript kopieren
 COPY start.sh /minecraft/start.sh
 RUN chmod +x /minecraft/start.sh
 
-# Expose Standard-Minecraft-Port
 EXPOSE 25565
 
-# Startbefehl
 CMD ["/minecraft/start.sh"]

@@ -2,10 +2,11 @@
 
 services:
   paper:
-    image: ghcr.io/Mario-1981/minecraft-paper:latest  # Image aus GHCR
+    image: ghcr.io/<USERNAME>/minecraft-paper:1.21.8
     environment:
-      PAPER_VERSION: "1.21.8"
       EULA: "TRUE"
+      JAVA_XMS: "2G"
+      JAVA_XMX: "4G"
     ports:
       - "25565:25565"
     volumes:
