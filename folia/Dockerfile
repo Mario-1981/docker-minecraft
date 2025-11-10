@@ -12,8 +12,10 @@ RUN apt-get update && \
 # Arbeitsverzeichnis
 WORKDIR /minecraft
 
-# Folia JAR herunterladen
-RUN curl -L -o folia.jar https://api.papermc.io/v2/projects/folia/versions/${FOLIA_VERSION}/builds/1/downloads/folia-${FOLIA_VERSION}-1.jar
+# Folia JAR herunterladen (neueste Build)
+RUN echo "Downloading Folia version ${FOLIA_VERSION}..." && \
+    BUILD=$(curl -fsSL https://api.papermc.io/v2/projects/folia/versions/${FOLIA_VERSION} | jq -r '.builds[-1]') && \
+    curl -fsSL -o folia.jar https://api.papermc.io/v2/projects/folia/versions/${FOLIA_VERSION}/builds/${BUILD}/downloads/folia-${FOLIA_VERSION}-${BUILD}.jar
 
 # Startscript kopieren
 COPY start.sh /minecraft/start.sh
