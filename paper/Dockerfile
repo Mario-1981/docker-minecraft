@@ -3,6 +3,7 @@ FROM debian:13-slim
 
 # Build-Argument für Paper-Version
 ARG PAPER_VERSION=1.21.8
+ENV IMAGE_TAG=${PAPER_VERSION}
 
 # Installiere Java und Hilfsprogramme
 RUN apt-get update && \
@@ -18,7 +19,7 @@ RUN mkdir -p /minecraft-default
 # Paper JAR herunterladen (neueste Build)
 RUN echo "Downloading PaperMC version ${PAPER_VERSION}..." && \
     BUILD=$(curl -fsSL https://api.papermc.io/v2/projects/paper/versions/${PAPER_VERSION} | jq -r '.builds[-1]') && \
-    curl -fsSL -o /minecraft-default/paper.jar https://api.papermc.io/v2/projects/paper/versions/${PAPER_VERSION}/builds/${BUILD}/downloads/paper-${PAPER_VERSION}-${BUILD}.jar
+    curl -fsSL -o /minecraft-default/paper-${PAPER_VERSION}.jar https://api.papermc.io/v2/projects/paper/versions/${PAPER_VERSION}/builds/${BUILD}/downloads/paper-${PAPER_VERSION}-${BUILD}.jar
 
 # Startscript ins Default-Verzeichnis kopieren
 COPY start.sh /minecraft-default/start.sh
