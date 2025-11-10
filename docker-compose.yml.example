@@ -8,8 +8,6 @@ services:
     networks:
       - minecraft
     environment:
-      PUID: 1000
-      PGID: 1000
       JAVA_XMS: "1G"
       JAVA_XMX: "2G"
       JAVA_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled"
@@ -17,6 +15,10 @@ services:
       - "25565:25565"
     volumes:
       - ./velocity_data:/velocity
+    depends_on:
+      - paper
+      - folia
+    restart: unless-stopped
     stdin_open: true
     tty: true
 
@@ -26,17 +28,32 @@ services:
     networks:
       - minecraft
     environment:
-      PUID: 1000
-      PGID: 1000
 #      EULA: "TRUE"        # muss explizit gesetzt werden!
       JAVA_XMS: "2G"
       JAVA_XMX: "4G"
       JAVA_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled"
     volumes:
       - ./paper_data:/minecraft
+    restart: unless-stopped
     stdin_open: true
     tty: true
 
+  folia:
+    image: ghcr.io/mario-1981/minecraft-folia:latest
+    container_name: paper
+    networks:
+      - minecraft
+    environment:
+#      EULA: "TRUE"        # muss explizit gesetzt werden!
+      JAVA_XMS: "2G"
+      JAVA_XMX: "4G"
+      JAVA_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled"
+    volumes:
+      - ./folia_data:/minecraft
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+	
 networks:
   minecraft:
     driver: bridge

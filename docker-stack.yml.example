@@ -1,0 +1,77 @@
+#version: "3.9"
+
+services:
+
+  velocity:
+    image: ghcr.io/mario-1981/velocity:latest
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: any        # Neustart bei jedem Fehler
+        delay: 5s             # Wartezeit bis Neustart
+        max_attempts: 0       # unbegrenzt
+        window: 60s
+	networks:
+      - minecraft
+    environment:
+      JAVA_XMS: "1G"
+      JAVA_XMX: "2G"
+      JAVA_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled"
+    ports:
+      - "25565:25565"
+    volumes:
+      - /opt/velocity_data:/velocity
+    stdin_open: true
+    tty: true
+
+  paper:
+    image: ghcr.io/mario-1981/minecraft-paper:latest
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: any        # Neustart bei jedem Fehler
+        delay: 5s             # Wartezeit bis Neustart
+        max_attempts: 0       # unbegrenzt
+        window: 60s
+    networks:
+      - minecraft
+    environment:
+#      EULA: "TRUE"        # muss explizit gesetzt werden!
+      JAVA_XMS: "2G"
+      JAVA_XMX: "4G"
+      JAVA_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled"
+    volumes:
+      - /opt/paper_data:/minecraft
+    stdin_open: true
+    tty: true
+
+  folia:
+    image: ghcr.io/mario-1981/minecraft-folia:latest
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: any        # Neustart bei jedem Fehler
+        delay: 5s             # Wartezeit bis Neustart
+        max_attempts: 0       # unbegrenzt
+        window: 60s
+    networks:
+      - minecraft
+    environment:
+#      EULA: "TRUE"        # muss explizit gesetzt werden!
+      JAVA_XMS: "2G"
+      JAVA_XMX: "4G"
+      JAVA_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled"
+    volumes:
+      - /opt/folia_data:/minecraft
+    stdin_open: true
+    tty: true
+	
+networks:
+  minecraft:
+    driver: overlay

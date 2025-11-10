@@ -1,0 +1,23 @@
+#version: "3.9"
+
+services:
+  paper:
+    image: ghcr.io/mario-1981/velocity:latest
+    environment:
+      JAVA_XMS: "1G"
+      JAVA_XMX: "2G"
+    ports:
+      - "25565:25565"
+    volumes:
+      - /opt/velocity_data:/velocity
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: any        # Neustart bei jedem Fehler
+        delay: 5s             # Wartezeit bis Neustart
+        max_attempts: 0       # unbegrenzt
+        window: 60s
+    tty: true
+    stdin_open: true

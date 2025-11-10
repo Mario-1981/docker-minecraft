@@ -1,0 +1,19 @@
+#version: "3.9"
+
+services:
+  paper:
+    image: ghcr.io/mario-1981/velocity:latest
+    container_name: paper
+    environment:
+      PUID: 1000
+      PGID: 1000
+      JAVA_XMS: "2G"
+      JAVA_XMX: "4G"
+      JAVA_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled"
+    ports:
+      - "25565:25565"
+    volumes:
+      - ./velocity_data:/velocity
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
