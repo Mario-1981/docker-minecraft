@@ -130,23 +130,6 @@ docker stack rm minecraft
 
 ---
 
-## 🔐 Veröffentlichung (GitHub Container Registry)
-
-Login in GHCR:
-```bash
-echo "<TOKEN>" | docker login ghcr.io -u <USERNAME> --password-stdin
-```
-
-Pushen:
-```bash
-docker push ghcr.io/<USERNAME>/minecraft-paper:1.21.8
-docker push ghcr.io/<USERNAME>/minecraft-paper:latest
-```
-
-Auf GitHub das Repository im Bereich **Packages** auf **"Public"** stellen.
-
----
-
 ## 🕹️ Beispiel: Verbindung zum Server
 
 - Velocity Proxy: `minecraft.example.com:25577`  
