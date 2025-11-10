@@ -126,7 +126,6 @@ docker stack rm minecraft
 
 - Die Serverdateien werden im Container unter `/minecraft` (bzw. `/velocity`) gespeichert.  
 - Verwende **Host-Verzeichnisse oder GlusterFS**, um persistente Weltdaten zu speichern.  
-- Setze `PUID` und `PGID`, falls du den Container nicht als Root laufen lassen möchtest.  
 
 ---
 
