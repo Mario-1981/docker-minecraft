@@ -5,7 +5,9 @@ services:
     image: ghcr.io/mario-1981/minecraft-paper:latest
     container_name: paper
     environment:
-      EULA: "TRUE"        # muss explizit gesetzt werden!
+      PUID: 1000
+      PGID: 1000
+#      EULA: "TRUE"        # muss explizit gesetzt werden!
       JAVA_XMS: "2G"
       JAVA_XMX: "4G"
       JAVA_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled"
