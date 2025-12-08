@@ -2,7 +2,7 @@
 FROM debian:13-slim
 
 # Build-Argument für Velocity-Version
-ARG VELOCITY_VERSION=3.6.1
+ARG VELOCITY_VERSION=3.4.0-SNAPSHOT
 
 # Installiere Java & Hilfsprogramme
 RUN apt-get update && \

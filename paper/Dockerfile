@@ -2,7 +2,7 @@
 FROM debian:13-slim
 
 # Build-Argument für Paper-Version
-ARG PAPER_VERSION=1.21.8
+ARG PAPER_VERSION=1.21.11
 ENV IMAGE_TAG=${PAPER_VERSION}
 
 # Installiere Java und Hilfsprogramme
